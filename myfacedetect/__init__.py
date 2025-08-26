@@ -30,7 +30,7 @@ from .core import (
     save_face_crops
 )
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __author__ = "B Santosh Krishna"
 __email__ = "santoshkrishnabandla@gmail.com"
 __description__ = "Enhanced face detection library with multiple methods"

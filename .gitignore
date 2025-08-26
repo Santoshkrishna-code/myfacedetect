@@ -77,14 +77,9 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-demo.py
-example_*.py
-test_*.py
-complete_test.py
-direct_usage.py
-quick_test.py
+
 *.jpg
 *.jpeg
 *.png
 *.gif
-external_test.py
+

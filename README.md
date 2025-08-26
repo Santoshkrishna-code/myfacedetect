@@ -1,4 +1,4 @@
-# 🎯 MyFaceDetect v0.2.1
+# 🎯 MyFaceDetect v0.2.2
 
 [![PyPI Version](https://img.shields.io/pypi/v/myfacedetect.svg)](https://pypi.org/project/myfacedetect/)
 [![Python Version](https://img.shields.io/pypi/pyversions/myfacedetect.svg)](https://pypi.org/project/myfacedetect/)
@@ -8,7 +8,7 @@
 
 A comprehensive Python library for **enhanced face detection** in images and real-time video streams using **OpenCV Haar cascades** and **MediaPipe** with **intelligent filtering algorithms**.
 
-> 🚀 **NEW in v0.2.1**: Smart false positive filtering, enhanced detection accuracy, and improved real-time performance!
+> 🚀 **NEW in v0.2.2**: Enhanced stability, critical bug fixes, and production-ready performance!
 
 ## 🌟 Features
 

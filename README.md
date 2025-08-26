@@ -1,10 +1,14 @@
-# MyFaceDetect
+# 🎯 MyFaceDetect v0.2.1
 
+[![PyPI Version](https://img.shields.io/pypi/v/myfacedetect.svg)](https://pypi.org/project/myfacedetect/)
 [![Python Version](https://img.shields.io/pypi/pyversions/myfacedetect.svg)](https://pypi.org/project/myfacedetect/)
 [![License](https://img.shields.io/github/license/Santoshkrishna-code/myfacedetect.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/Santoshkrishna-code/myfacedetect/ci.yml?branch=main)](https://github.com/Santoshkrishna-code/myfacedetect/actions)
+[![Downloads](https://img.shields.io/pypi/dm/myfacedetect.svg)](https://pypi.org/project/myfacedetect/)
+[![GitHub Stars](https://img.shields.io/github/stars/Santoshkrishna-code/myfacedetect.svg)](https://github.com/Santoshkrishna-code/myfacedetect/stargazers)
 
-A comprehensive Python library for face detection in images and real-time video streams using OpenCV Haar cascades and MediaPipe.
+A comprehensive Python library for **enhanced face detection** in images and real-time video streams using **OpenCV Haar cascades** and **MediaPipe** with **intelligent filtering algorithms**.
+
+> 🚀 **NEW in v0.2.1**: Smart false positive filtering, enhanced detection accuracy, and improved real-time performance!
 
 ## 🌟 Features
 

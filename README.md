@@ -1,8 +1,8 @@
 # MyFaceDetect
 
 [![Python Version](https://img.shields.io/pypi/pyversions/myfacedetect.svg)](https://pypi.org/project/myfacedetect/)
-[![License](https://img.shields.io/github/license/yourusername/myfacedetect.svg)](LICENSE)
-[![Build Status](https://img.shields.io/github/workflow/status/yourusername/myfacedetect/CI)](https://github.com/yourusername/myfacedetect/actions)
+[![License](https://img.shields.io/github/license/Santoshkrishna-code/myfacedetect.svg)](LICENSE)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/Santoshkrishna-code/myfacedetect/ci.yml?branch=main)](https://github.com/Santoshkrishna-code/myfacedetect/actions)
 
 A comprehensive Python library for face detection in images and real-time video streams using OpenCV Haar cascades and MediaPipe.
 
@@ -274,4 +274,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by B Santosh Krishna**

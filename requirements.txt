@@ -1,0 +1,8 @@
+# Core dependencies
+opencv-python>=4.5.0
+mediapipe>=0.8.0
+numpy>=1.21.0
+
+# Optional development dependencies
+# Install with: pip install -r requirements.txt -r requirements-dev.txt
+# Or: pip install .[dev]

@@ -1,0 +1,61 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "myfacedetect"
+version = "0.2.0"
+description = "A comprehensive face detection library with multiple detection methods and advanced features"
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "MyFaceDetect Team", email = "contact@example.com"}
+]
+maintainers = [
+    {name = "MyFaceDetect Team", email = "contact@example.com"}
+]
+keywords = ["face-detection", "opencv", "mediapipe", "computer-vision", "image-processing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Multimedia :: Graphics",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "opencv-python>=4.5.0",
+    "mediapipe>=0.8.0",
+    "numpy>=1.21.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "mypy",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/myfacedetect"
+Documentation = "https://github.com/yourusername/myfacedetect#readme"
+Repository = "https://github.com/yourusername/myfacedetect"
+"Bug Tracker" = "https://github.com/yourusername/myfacedetect/issues"
+
+[project.scripts]
+myfacedetect-demo = "myfacedetect.demo:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["myfacedetect*"]
+exclude = ["tests*"]

@@ -30,9 +30,9 @@ from .core import (
     save_face_crops
 )
 
-__version__ = "0.2.0"
-__author__ = "Your Name"
-__email__ = "your.email@example.com"
+__version__ = "0.2.1"
+__author__ = "B Santosh Krishna"
+__email__ = "santoshkrishnabandla@gmail.com"
 __description__ = "Enhanced face detection library with multiple methods"
 
 # Make main functions available at package level

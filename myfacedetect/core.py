@@ -23,8 +23,9 @@ class FaceDetectionResult:
         self.method = method
 
     def __repr__(self):
-        return f"Face(x={self.x}, y={self.y}, w={self.width}, h={self.height}, conf={self.confidence:.2f}, method={self.method})"    @ property
+        return f"Face(x={self.x}, y={self.y}, w={self.width}, h={self.height}, conf={self.confidence:.2f}, method={self.method})"
 
+    @property
     def bbox(self) -> Tuple[int, int, int, int]:
         """Return bounding box as (x, y, width, height)."""
         return (self.x, self.y, self.width, self.height)
@@ -38,9 +39,9 @@ class FaceDetectionResult:
 def detect_faces(image_path: Union[str, Path],
                  method: str = "haar",
                  return_image: bool = False,
-                 scale_factor: float = 1.1,
-                 min_neighbors: int = 4,
-                 min_size: Tuple[int, int] = (30, 30)) -> Union[List[FaceDetectionResult], Tuple[List[FaceDetectionResult], np.ndarray]]:
+                 scale_factor: float = 1.05,
+                 min_neighbors: int = 3,
+                 min_size: Tuple[int, int] = (20, 20)) -> Union[List[FaceDetectionResult], Tuple[List[FaceDetectionResult], np.ndarray]]:
     """
     Detect faces in an image with multiple detection methods.
 
@@ -100,48 +101,203 @@ def _detect_faces_haar(img: np.ndarray,
                        scale_factor: float,
                        min_neighbors: int,
                        min_size: Tuple[int, int]) -> List[FaceDetectionResult]:
-    """Detect faces using Haar cascades."""
-    face_cascade = cv2.CascadeClassifier(
-        cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    """Detect faces using Haar cascades with multiple classifiers."""
+    faces = []
+
+    # Try multiple cascade classifiers for better detection
+    cascades = [
+        cv2.data.haarcascades + "haarcascade_frontalface_default.xml",
+        cv2.data.haarcascades + "haarcascade_frontalface_alt.xml",
+        cv2.data.haarcascades + "haarcascade_frontalface_alt2.xml",
+        cv2.data.haarcascades + "haarcascade_profileface.xml"
+    ]
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    detected_faces = face_cascade.detectMultiScale(
-        gray, scale_factor, min_neighbors, minSize=min_size)
 
-    return [FaceDetectionResult((int(x), int(y), int(w), int(h)), method="haar")
-            for (x, y, w, h) in detected_faces]
+    # Apply histogram equalization for better detection
+    gray = cv2.equalizeHist(gray)
+
+    all_faces = []
+
+    for cascade_path in cascades:
+        try:
+            face_cascade = cv2.CascadeClassifier(cascade_path)
+            if not face_cascade.empty():
+                detected_faces = face_cascade.detectMultiScale(
+                    gray, scale_factor, min_neighbors, minSize=min_size)
+                all_faces.extend([(int(x), int(y), int(w), int(h))
+                                 for (x, y, w, h) in detected_faces])
+        except Exception as e:
+            logger.warning(f"Could not load cascade {cascade_path}: {e}")
+            continue
+
+    # Remove duplicates
+    unique_faces = []
+    for face in all_faces:
+        is_duplicate = False
+        for existing in unique_faces:
+            # Check if faces overlap significantly
+            x1, y1, w1, h1 = face
+            x2, y2, w2, h2 = existing
+
+            # Calculate intersection
+            x_overlap = max(0, min(x1 + w1, x2 + w2) - max(x1, x2))
+            y_overlap = max(0, min(y1 + h1, y2 + h2) - max(y1, y2))
+            overlap = x_overlap * y_overlap
+
+            # Calculate union
+            union = w1 * h1 + w2 * h2 - overlap
+
+            # If overlap is significant, consider it duplicate
+            if overlap / union > 0.3:
+                is_duplicate = True
+                break
+
+        if not is_duplicate:
+            unique_faces.append(face)
+
+    return [FaceDetectionResult(face, method="haar") for face in unique_faces]
 
 
 def _detect_faces_mediapipe(img: np.ndarray) -> List[FaceDetectionResult]:
-    """Detect faces using MediaPipe."""
+    """Detect faces using MediaPipe with improved settings."""
     faces = []
 
-    with mp_face_detection.FaceDetection(model_selection=0, min_detection_confidence=0.5) as face_detection:
-        rgb_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        results = face_detection.process(rgb_img)
+    # Try both model selections for better coverage
+    # Model 1 is better for close faces, Model 0 for distant faces
+    model_selections = [1, 0]
+    confidence_levels = [0.1, 0.2, 0.3]  # Multiple confidence levels
 
-        if results.detections:
-            h, w, _ = img.shape
-            for detection in results.detections:
-                bbox = detection.location_data.relative_bounding_box
-                x = int(bbox.xmin * w)
-                y = int(bbox.ymin * h)
-                width = int(bbox.width * w)
-                height = int(bbox.height * h)
-                confidence = detection.score[0]
+    all_detections = []
 
-                faces.append(FaceDetectionResult(
-                    (x, y, width, height), confidence, "mediapipe"))
+    for model_selection in model_selections:
+        for min_confidence in confidence_levels:
+            try:
+                with mp_face_detection.FaceDetection(
+                    model_selection=model_selection,
+                    min_detection_confidence=min_confidence
+                ) as face_detection:
+                    # Try both original and enhanced image
+                    images_to_try = [img]
 
-    return faces
+                    # Add histogram equalized version
+                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                    enhanced_gray = cv2.equalizeHist(gray)
+                    enhanced_img = cv2.cvtColor(
+                        enhanced_gray, cv2.COLOR_GRAY2BGR)
+                    images_to_try.append(enhanced_img)
+
+                    for test_img in images_to_try:
+                        rgb_img = cv2.cvtColor(test_img, cv2.COLOR_BGR2RGB)
+                        results = face_detection.process(rgb_img)
+
+                        if results.detections:
+                            h, w, _ = img.shape
+                            for detection in results.detections:
+                                bbox = detection.location_data.relative_bounding_box
+                                x = max(0, int(bbox.xmin * w))
+                                y = max(0, int(bbox.ymin * h))
+                                width = min(w - x, int(bbox.width * w))
+                                height = min(h - y, int(bbox.height * h))
+
+                                if width > 10 and height > 10:  # Minimum size check
+                                    confidence = detection.score[0] if detection.score else 0.5
+                                    all_detections.append(FaceDetectionResult(
+                                        (x, y, width, height),
+                                        confidence=confidence,
+                                        method="mediapipe"
+                                    ))
+
+                        # If we found faces, break early to avoid redundancy
+                        if all_detections:
+                            break
+
+                if all_detections:
+                    break
+
+            except Exception as e:
+                logger.warning(
+                    f"MediaPipe detection failed with model={model_selection}, conf={min_confidence}: {e}")
+                continue
+
+        if all_detections:
+            break
+
+    # Remove duplicates from all detections
+    unique_faces = []
+    for detection in all_detections:
+        is_duplicate = False
+        for unique_face in unique_faces:
+            if _calculate_overlap(detection, unique_face) > 0.3:
+                is_duplicate = True
+                # Keep the one with higher confidence
+                if detection.confidence > unique_face.confidence:
+                    unique_faces.remove(unique_face)
+                    unique_faces.append(detection)
+                break
+
+        if not is_duplicate:
+            unique_faces.append(detection)
+
+    return unique_faces
 
 
 def _remove_duplicate_faces(faces: List[FaceDetectionResult],
                             overlap_threshold: float = 0.3) -> List[FaceDetectionResult]:
-    """Remove duplicate face detections based on overlap."""
+    """Remove duplicate face detections based on overlap and intelligent filtering."""
     if len(faces) <= 1:
         return faces
 
+    # Separate by method
+    mediapipe_faces = [f for f in faces if f.method == "mediapipe"]
+    haar_faces = [f for f in faces if f.method == "haar"]
+
+    # Smart filtering: If MediaPipe found faces, use it as ground truth
+    if mediapipe_faces:
+        if len(mediapipe_faces) == 1 and len(haar_faces) > 1:
+            # One MediaPipe face, multiple Haar faces - filter aggressively
+            mp_face = mediapipe_faces[0]
+            mp_center = mp_face.center
+
+            # Find the Haar face closest to MediaPipe detection
+            best_haar_face = None
+            min_distance = float('inf')
+
+            for haar_face in haar_faces:
+                haar_center = haar_face.center
+                distance = ((mp_center[0] - haar_center[0]) **
+                            2 + (mp_center[1] - haar_center[1])**2)**0.5
+
+                # Only consider Haar faces that are reasonably close and similar size
+                size_ratio = min(haar_face.width / mp_face.width,
+                                 mp_face.width / haar_face.width)
+
+                if distance < 50 and size_ratio > 0.5:  # Close and similar size
+                    if distance < min_distance:
+                        min_distance = distance
+                        best_haar_face = haar_face
+
+            # Return MediaPipe + best matching Haar (if any) or just MediaPipe
+            if best_haar_face:
+                return [mp_face, best_haar_face]
+            else:
+                return [mp_face]  # Just MediaPipe if no good Haar match
+
+        elif len(mediapipe_faces) == 1 and len(haar_faces) == 1:
+            # One MediaPipe, one Haar - check if they're the same face
+            mp_face = mediapipe_faces[0]
+            haar_face = haar_faces[0]
+
+            if _calculate_overlap(mp_face, haar_face) > 0.3:
+                return [mp_face]  # Same face, keep MediaPipe
+            else:
+                return [mp_face, haar_face]  # Different faces
+
+        else:
+            # Multiple MediaPipe faces - trust MediaPipe more
+            return mediapipe_faces
+
+    # If no MediaPipe faces, fall back to traditional duplicate removal
     unique_faces = []
     for face in faces:
         is_duplicate = False
@@ -350,8 +506,25 @@ def detect_faces_realtime(camera_index: int = 0,
                 logger.info("Switched to both methods")
 
     finally:
-        cap.release()
-        cv2.destroyAllWindows()
+        # Cleanup
+        try:
+            if cap is not None:
+                cap.release()
+        except:
+            pass
+
+        try:
+            cv2.destroyAllWindows()
+        except:
+            pass
+
+        try:
+            # Close MediaPipe if it was opened
+            if mp_face_detector is not None:
+                mp_face_detector.close()
+        except:
+            pass
+
         logger.info("Camera released and windows closed")
 
 
@@ -416,7 +589,7 @@ def _draw_faces_realtime(frame: np.ndarray,
 # Utility functions for advanced features
 def batch_detect_faces(image_paths: List[Union[str, Path]],
                        method: str = "haar",
-                       **kwargs) -> List[List[FaceDetectionResult]]:
+                       **kwargs) -> dict[str, List[FaceDetectionResult]]:
     """
     Detect faces in multiple images efficiently.
 
@@ -426,17 +599,17 @@ def batch_detect_faces(image_paths: List[Union[str, Path]],
         **kwargs: Additional arguments for detect_faces
 
     Returns:
-        List of detection results for each image
+        Dictionary mapping image paths to detection results
     """
-    results = []
+    results = {}
     for path in image_paths:
         try:
             faces = detect_faces(path, method=method, **kwargs)
-            results.append(faces)
+            results[str(path)] = faces
             logger.info(f"Processed {path}: {len(faces)} faces")
         except Exception as e:
             logger.error(f"Error processing {path}: {e}")
-            results.append([])
+            results[str(path)] = []
 
     return results
 

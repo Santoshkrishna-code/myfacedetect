@@ -16,14 +16,15 @@ logger = logging.getLogger(__name__)
 
 class FaceDetectionResult:
     """Class to hold face detection results with additional information."""
-    
+
     def __init__(self, bbox: Tuple[int, int, int, int], confidence: float = 1.0, method: str = "unknown"):
         self.x, self.y, self.width, self.height = bbox
         self.confidence = confidence
         self.method = method
-    
+
     def __repr__(self):
-        return f"Face(x={self.x}, y={self.y}, w={self.width}, h={self.height}, conf={self.confidence:.2f}, method={self.method})"    @property
+        return f"Face(x={self.x}, y={self.y}, w={self.width}, h={self.height}, conf={self.confidence:.2f}, method={self.method})"    @ property
+
     def bbox(self) -> Tuple[int, int, int, int]:
         """Return bounding box as (x, y, width, height)."""
         return (self.x, self.y, self.width, self.height)

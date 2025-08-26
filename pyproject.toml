@@ -47,10 +47,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/myfacedetect"
-Documentation = "https://github.com/yourusername/myfacedetect#readme"
-Repository = "https://github.com/yourusername/myfacedetect"
-"Bug Tracker" = "https://github.com/yourusername/myfacedetect/issues"
+Homepage = "https://github.com/Santoshkrishna-code/myfacedetect"
+Documentation = "https://github.com/Santoshkrishna-code/myfacedetect#readme"
+Repository = "https://github.com/Santoshkrishna-code/myfacedetect"
+"Bug Tracker" = "https://github.com/Santoshkrishna-code/myfacedetect/issues"
 
 [project.scripts]
 myfacedetect-demo = "myfacedetect.demo:main"

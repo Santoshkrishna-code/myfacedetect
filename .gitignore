@@ -53,7 +53,7 @@ cover/
 
 # Virtual environments
 .env
-.venv
+.venv/
 env/
 venv/
 ENV/
@@ -77,9 +77,38 @@ ehthumbs.db
 Thumbs.db
 
 # Project specific
-
+# MyFaceDetect specific files
 *.jpg
 *.jpeg
 *.png
 *.gif
+*.bmp
+*.tiff
+*.webp
+face_db/
+training_data/
+cache/
+realtime_output/
+face_database.pkl
+face_database_demo.json
+face_metadata.json
+
+# Model files
+*.pt
+*.onnx
+*.pth
+*.h5
+*.weights
+
+# Test and demo files
+test_*.py
+demo_*.py
+*_test.py
+*_demo.py
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.out
 

@@ -1,0 +1,99 @@
+# MyFaceDetect Configuration
+# This file allows users to customize detection pipelines without code changes
+
+# Default Pipeline Configuration
+default:
+  detector: "mediapipe"  # haar, mediapipe, retinaface, yolo, ensemble
+  recognizer: null       # arcface, facenet, insightface
+  preprocessing:
+    - alignment
+    - normalization
+    - lighting_correction
+  postprocessing:
+    - nms_threshold: 0.4
+    - confidence_threshold: 0.5
+  performance:
+    device: "auto"       # cpu, cuda, auto (auto will use CPU since no GPU)
+    batch_size: 1
+    precision: "fp32"    # fp32, fp16, int8
+
+# High Accuracy Pipeline (Slower, More Accurate)
+high_accuracy:
+  detector: "ensemble"   # Multiple detectors with voting
+  recognizer: "arcface"
+  preprocessing:
+    - alignment
+    - super_resolution
+    - normalization
+    - lighting_correction
+    - denoising
+  postprocessing:
+    - nms_threshold: 0.3
+    - confidence_threshold: 0.7
+  performance:
+    device: "cuda"
+    batch_size: 4
+    precision: "fp32"
+
+# Real-time Pipeline (Fast, Good Accuracy)
+realtime:
+  detector: "blazeface"
+  recognizer: null
+  preprocessing:
+    - alignment
+    - normalization
+  postprocessing:
+    - nms_threshold: 0.5
+    - confidence_threshold: 0.4
+  performance:
+    device: "cuda"
+    batch_size: 1
+    precision: "fp16"
+
+# Security Pipeline (Anti-spoofing enabled)
+security:
+  detector: "retinaface"
+  recognizer: "arcface"
+  liveness_detection: true
+  anti_spoofing: true
+  preprocessing:
+    - alignment
+    - normalization
+    - lighting_correction
+  postprocessing:
+    - nms_threshold: 0.4
+    - confidence_threshold: 0.6
+  performance:
+    device: "cuda"
+    batch_size: 1
+    precision: "fp32"
+
+# Privacy-first Pipeline (Blur faces)
+privacy:
+  detector: "mediapipe"
+  recognizer: null
+  privacy_mode: true
+  face_blur_strength: 15
+  preprocessing:
+    - normalization
+  postprocessing:
+    - confidence_threshold: 0.3
+  performance:
+    device: "auto"
+    batch_size: 1
+    precision: "fp32"
+
+# Mobile/Edge Pipeline (Lightweight)
+mobile:
+  detector: "blazeface"
+  recognizer: null
+  preprocessing:
+    - alignment
+  postprocessing:
+    - nms_threshold: 0.5
+    - confidence_threshold: 0.4
+  performance:
+    device: "cpu"
+    batch_size: 1
+    precision: "int8"
+    optimization: "mobile"

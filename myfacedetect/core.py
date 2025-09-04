@@ -650,3 +650,36 @@ def save_face_crops(image_path: Union[str, Path],
         logger.info(f"Saved face crop: {crop_path}")
 
     return saved_files
+
+
+class FaceDetector:
+    """Legacy FaceDetector class for backward compatibility."""
+
+    def __init__(self, method="haar", min_confidence=0.5, scale_factor=1.1, min_neighbors=3):
+        self.method = method
+        self.min_confidence = min_confidence
+        self.scale_factor = scale_factor
+        self.min_neighbors = min_neighbors
+        self.stats = {'total_images': 0, 'total_faces': 0}
+
+    def detect_faces(self, image_path):
+        """Detect faces in image."""
+        faces = detect_faces(
+            image_path,
+            method=self.method,
+            scale_factor=self.scale_factor,
+            min_neighbors=self.min_neighbors
+        )
+        self.stats['total_images'] += 1
+        self.stats['total_faces'] += len(faces)
+        return faces
+
+    def process_video(self, video_path, output_path=None):
+        """Process video file (simplified implementation)."""
+        logger.info(f"Processing video: {video_path}")
+        # This would be implemented for video processing
+        pass
+
+    def get_stats(self):
+        """Get detection statistics."""
+        return self.stats.copy()

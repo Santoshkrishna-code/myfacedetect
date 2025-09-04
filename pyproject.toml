@@ -3,18 +3,18 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "myfacedetect"
-version = "0.2.2"
-description = "A comprehensive face detection library with multiple detection methods and advanced features"
+name = "myfacedetect-santosh"
+version = "0.3.0"
+description = "High-performance face detection and recognition library with CPU-only support"
 readme = "README.md"
 license = "MIT"
 authors = [
-    {name = "MyFaceDetect Team", email = "contact@example.com"}
+    {name = "Santosh Krishna", email = "santoshkrishna.code@gmail.com"}
 ]
 maintainers = [
-    {name = "MyFaceDetect Team", email = "contact@example.com"}
+    {name = "Santosh Krishna", email = "santoshkrishna.code@gmail.com"}
 ]
-keywords = ["face-detection", "opencv", "mediapipe", "computer-vision", "image-processing"]
+keywords = ["face-detection", "face-recognition", "opencv", "mediapipe", "computer-vision", "cpu-only", "real-time"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -33,17 +33,33 @@ classifiers = [
 requires-python = ">=3.8"
 dependencies = [
     "opencv-python>=4.5.0",
-    "mediapipe>=0.8.0",
+    "mediapipe>=0.9.0",
     "numpy>=1.21.0",
+    "Pillow>=8.0.0",
+    "scikit-learn>=1.0.0",
+    "pyyaml>=5.4.0",
+    "onnxruntime>=1.10.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=6.0",
-    "pytest-cov",
-    "black",
-    "flake8",
-    "mypy",
+    "pytest-cov>=2.10",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.910",
+    "build>=0.7.0",
+    "twine>=3.4.0",
+]
+examples = [
+    "matplotlib>=3.3.0",
+]
+gpu = [
+    "onnxruntime-gpu>=1.10.0",
+]
+advanced = [
+    "ultralytics>=8.0.0",
+    "insightface>=0.7.0",
 ]
 
 [project.urls]
@@ -53,7 +69,7 @@ Repository = "https://github.com/Santoshkrishna-code/myfacedetect"
 "Bug Tracker" = "https://github.com/Santoshkrishna-code/myfacedetect/issues"
 
 [project.scripts]
-myfacedetect-demo = "myfacedetect.demo:main"
+myfacedetect-demo = "myfacedetect.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["."]

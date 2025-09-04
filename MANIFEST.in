@@ -1,9 +1,35 @@
 include README.md
 include LICENSE
 include requirements.txt
+include setup.py
+include MANIFEST.in
+
+# Include package data
 recursive-include myfacedetect *.py
+recursive-include myfacedetect *.yaml *.yml *.json
+recursive-include myfacedetect/data *.xml *.dat *.yaml *.json
+recursive-include myfacedetect/models *.pt *.pth *.onnx
+recursive-include myfacedetect/config *.yaml *.json
+
+# Include documentation
+recursive-include docs *.md *.rst *.txt
+include docs/Makefile
+
+# Include examples (for reference)
+recursive-include examples *.py *.md *.txt
+recursive-include scripts *.py *.sh *.bat
+
+# Include test images for examples
+recursive-include examples/images *.jpg *.png *.jpeg
+
+# Include tests for development
 recursive-include tests *.py
+
+# Exclude unwanted files
 global-exclude *.pyc
 global-exclude __pycache__
 global-exclude .DS_Store
 global-exclude *.so
+exclude *.log
+exclude .coverage
+exclude .pytest_cache

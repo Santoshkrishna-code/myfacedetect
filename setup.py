@@ -17,7 +17,7 @@ long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 version = "0.3.0"
 
 setup(
-    name="myfacedetect-santosh",
+    name="myfacedetect",
     version=version,
     author="Santosh Krishna",
     author_email="santoshkrishna.code@gmail.com",

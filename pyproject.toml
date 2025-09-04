@@ -3,7 +3,7 @@ requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "myfacedetect-santosh"
+name = "myfacedetect"
 version = "0.3.0"
 description = "High-performance face detection and recognition library with CPU-only support"
 readme = "README.md"

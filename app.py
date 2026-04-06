@@ -163,7 +163,7 @@ with tab3:
 # Footer
 st.markdown("---")
 st.markdown("""
-**MyFaceDetect v0.3.0** - CPU-friendly face detection and recognition
+**MyFaceDetect v0.4.0** - CPU-friendly face detection and recognition
 
 - 📚 [Documentation](https://github.com/Santoshkrishna-code/myfacedetect)
 - 🐛 [Report Issues](https://github.com/Santoshkrishna-code/myfacedetect/issues)

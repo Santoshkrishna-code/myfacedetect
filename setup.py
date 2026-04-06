@@ -14,7 +14,7 @@ this_directory = Path(__file__).parent
 long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 
 # Read version
-version = "0.3.0"
+version = "0.4.0"
 
 setup(
     name="myfacedetect",

@@ -136,7 +136,7 @@ Examples:
         parser.print_help()
         sys.exit(1)
 
-    print("🚀 MyFaceDetect CLI v0.3.0")
+    print("🚀 MyFaceDetect CLI v0.4.0")
     print("-" * 30)
 
     if args.command == 'detect':

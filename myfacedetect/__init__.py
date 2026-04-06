@@ -1,5 +1,5 @@
 """
-MyFaceDetect v0.3.0 - Advanced Face Detection & Recognition Library
+MyFaceDetect v0.4.0 - Advanced Face Detection and Recognition Library
 ===================================================================
 
 A production-ready, CPU-optimized Python library for face detection,

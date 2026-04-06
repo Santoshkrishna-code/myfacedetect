@@ -1,8 +1,8 @@
-# MyFaceDetect v0.3.0 - Comprehensive Project Improvements
+# MyFaceDetect v0.4.0 - Comprehensive Project Improvements
 
 ## Overview
 
-This document summarizes all improvements made to the MyFaceDetect project in v0.3.0+, focusing on:
+This document summarizes all improvements made to the MyFaceDetect project in v0.4.0+, focusing on:
 - Build system modernization
 - Dependency optimization  
 - Enhanced training & evaluation
@@ -336,7 +336,7 @@ docker-compose up -d --scale api=3
 
 ## 11. Backward Compatibility
 
-✅ **Maintained compatibility** with v0.3.0 API:
+✅ **Maintained compatibility** with v0.4.0 API:
 - `detect_faces()` function works as before
 - `detect_faces_realtime()` still available
 - CLI interface unchanged
@@ -410,7 +410,7 @@ pip install myfacedetect[all]
 
 ## Summary
 
-**MyFaceDetect v0.3.0+** now features:
+**MyFaceDetect v0.4.0+** now features:
 
 | Component | Status | Impact |
 |-----------|--------|--------|

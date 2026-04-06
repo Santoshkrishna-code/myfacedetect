@@ -1,5 +1,5 @@
 """
-Centralized logging configuration for MyFaceDetect v0.3.0
+Centralized logging configuration for MyFaceDetect v0.4.0
 Provides clean, structured logging with reduced noise from third-party libraries.
 """
 import logging

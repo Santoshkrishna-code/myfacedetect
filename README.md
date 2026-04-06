@@ -1,4 +1,4 @@
-# 🚀 MyFaceDetect v0.3.0 - State-of-the-Art Face Detection & Recognition
+# 🚀 MyFaceDetect v0.4.0 - State-of-the-Art Face Detection & Recognition
 
 [![PyPI version](https://badge.fury.io/py/myfacedetect.svg)](https://badge.fury.io/py/myfacedetect)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -7,7 +7,7 @@
 
 **Enterprise-grade face detection and recognition library with modular architecture, advanced detection methods, and cutting-edge features.**
 
-## 🌟 What's New in v0.3.0
+## 🌟 What's New in v0.4.0
 
 ### 🏗️ **Modular Architecture**
 - Plugin-based detector system with factory pattern

@@ -3,7 +3,7 @@ MyFaceDetect Version Information
 """
 
 __title__ = "myfacedetect"
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 __author__ = "Santoshkrishna"
 __email__ = "santoshkrishna@example.com"
 __license__ = "MIT"

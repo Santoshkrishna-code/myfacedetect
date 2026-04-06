@@ -22,7 +22,7 @@ except ImportError:
 app = FastAPI(
     title="MyFaceDetect API",
     description="Face detection and recognition API",
-    version="0.3.0"
+    version="0.4.0"
 )
 
 # CORS middleware

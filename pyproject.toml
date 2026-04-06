@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "myfacedetect"
-version = "0.3.0"
+version = "0.4.0"
 description = "High-performance face detection and recognition library with CPU-only support"
 readme = "README.md"
 license = "MIT"

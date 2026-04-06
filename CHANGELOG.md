@@ -1,6 +1,6 @@
-# MyFaceDetect v0.3.0 Release Notes
+# MyFaceDetect v0.4.0 Release Notes
 
-## 🎉 What's New in Version 0.3.0
+## 🎉 What's New in Version 0.4.0
 
 ### 🚀 Major Features
 - **Real-time Face Detection & Recognition**: Live webcam processing at 1.0 FPS

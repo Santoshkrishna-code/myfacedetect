@@ -33,15 +33,17 @@ classifiers = [
 requires-python = ">=3.8"
 dependencies = [
     "opencv-python>=4.5.0",
-    "mediapipe>=0.9.0",
     "numpy>=1.21.0",
     "Pillow>=8.0.0",
-    "scikit-learn>=1.0.0",
     "pyyaml>=5.4.0",
-    "onnxruntime>=1.10.0",
 ]
 
 [project.optional-dependencies]
+core = [
+    "mediapipe>=0.9.0",
+    "scikit-learn>=1.0.0",
+    "onnxruntime>=1.10.0",
+]
 dev = [
     "pytest>=6.0",
     "pytest-cov>=2.10",
@@ -51,15 +53,41 @@ dev = [
     "build>=0.7.0",
     "twine>=3.4.0",
 ]
+training = [
+    "torch>=1.13.0",
+    "torchvision>=0.14.0",
+    "ultralytics>=8.0.0",
+    "albumentations>=1.3.0",
+    "scikit-learn>=1.0.0",
+    "pandas>=1.0.0",
+]
+recognition = [
+    "insightface>=0.7.0",
+]
+ui = [
+    "streamlit>=1.20.0",
+    "gradio>=3.50.0",
+]
 examples = [
     "matplotlib>=3.3.0",
 ]
 gpu = [
     "onnxruntime-gpu>=1.10.0",
+    "torch>=1.13.0",
 ]
-advanced = [
+all = [
+    "mediapipe>=0.9.0",
+    "scikit-learn>=1.0.0",
+    "onnxruntime>=1.10.0",
+    "torch>=1.13.0",
+    "torchvision>=0.14.0",
     "ultralytics>=8.0.0",
+    "albumentations>=1.3.0",
+    "pandas>=1.0.0",
     "insightface>=0.7.0",
+    "streamlit>=1.20.0",
+    "gradio>=3.50.0",
+    "matplotlib>=3.3.0",
 ]
 
 [project.urls]

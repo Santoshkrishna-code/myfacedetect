@@ -61,6 +61,24 @@ cd myfacedetect
 pip install -e .
 ```
 
+### CPU-only Quick Start
+
+If you are on a CPU-only system (no GPU), a lightweight setup and scripts are provided in `docs/CPU_SETUP.md` and `examples/`.
+
+PowerShell quick commands:
+
+```powershell
+python -m venv facedetect_env
+facedetect_env\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+python scripts/test_setup.py
+python examples/detect_faces_live.py
+```
+
+This will run the provided CPU-friendly live detection and example utilities.
+
+
 ### Basic Usage (Backward Compatible)
 
 ```python

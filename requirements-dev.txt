@@ -14,3 +14,14 @@ myst-parser>=0.15.0
 # Build tools
 build>=0.7.0
 twine>=3.4.0
+
+# Optional training / experiment packages (GPU recommended)
+torch>=1.13.0
+torchvision>=0.14.0
+ultralytics>=8.0.0
+albumentations>=1.3.0
+scikit-learn
+pandas
+onnxruntime
+# insightface  # optional for recognition training
+# wandb        # optional experiment tracking

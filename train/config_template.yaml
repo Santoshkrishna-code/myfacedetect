@@ -1,0 +1,101 @@
+# Data configuration
+data:
+  # Path to dataset
+  dataset_path: ./data/coco
+  
+  # Data splits
+  train_split: 0.80
+  val_split: 0.10
+  test_split: 0.10
+  
+  # Data loading
+  batch_size: 32
+  num_workers: 4
+  pin_memory: true
+  
+  # Augmentation
+  augmentation: true
+  
+  # Image preprocessing
+  img_size: 416
+  normalize_mean: [0.485, 0.456, 0.406]
+  normalize_std: [0.229, 0.224, 0.225]
+
+
+# Model configuration
+model:
+  # Model name and architecture
+  name: yolov8
+  backbone: resnet50
+  
+  # Model properties
+  pretrained: true
+  num_classes: 80
+  input_channels: 3
+  num_layers: 50
+  dropout: 0.1
+  
+  # Weights (optional)
+  weights_path: null
+
+
+# Training configuration
+training:
+  # Epochs and optimization
+  num_epochs: 100
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  momentum: 0.9
+  
+  # Optimizer and scheduler
+  optimizer: adam  # 'adam', 'sgd', 'adamw'
+  scheduler: cosine  # 'cosine', 'linear', 'step'
+  warmup_epochs: 5
+  
+  # Loss and regularization
+  loss_fn: cross_entropy
+  label_smoothing: 0.1
+  
+  # Device and precision
+  device: cuda  # 'cuda' or 'cpu'
+  mixed_precision: true
+  gradient_accumulation_steps: 1
+  
+  # Checkpointing
+  save_every_n_epochs: 5
+  keep_best_n: 3
+  
+  # Early stopping
+  early_stopping_patience: 10
+  early_stopping_min_delta: 0.0001
+  
+  # Logging
+  log_every_n_batches: 100
+  log_dir: ./logs
+
+
+# Augmentation configuration
+augmentation:
+  # Spatial augmentation
+  horizontal_flip: 0.5
+  vertical_flip: 0.0
+  rotation: 10.0  # degrees
+  scale: 0.2
+  shear: 10.0  # degrees
+  
+  # Color augmentation
+  brightness: 0.2
+  contrast: 0.2
+  hue: 0.1
+  saturation: 0.2
+  blur: 0.1
+
+
+# Experiment settings
+experiment_name: face_detection_baseline
+seed: 42
+log_to_wandb: false
+
+# Output directories
+checkpoints_dir: ./checkpoints
+output_dir: ./outputs

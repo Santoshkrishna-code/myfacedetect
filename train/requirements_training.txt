@@ -1,0 +1,41 @@
+# Core dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.23.0
+pandas>=1.5.0
+
+# Configuration management
+PyYAML>=6.0
+jsonschema>=4.17.0
+python-dotenv>=0.21.0
+
+# Hyperparameter tuning
+optuna>=3.0.0
+plotly>=5.0.0
+
+# ML tracking and logging
+wandb>=0.13.0
+tensorboard>=2.11.0
+
+# Image processing
+Pillow>=9.0.0
+scikit-image>=0.19.0
+opencv-python>=4.5.0
+
+# Data augmentation
+albumentations>=1.3.0
+torchvision>=0.15.0
+
+# Utilities
+tqdm>=4.64.0
+matplotlib>=3.5.0
+seaborn>=0.12.0
+scipy>=1.9.0
+scikit-learn>=1.1.0
+
+# Development
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=22.0.0
+flake8>=4.0.0
+mypy>=0.990

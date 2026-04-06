@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: myfacedetect-web
+    ports:
+      - "8501:8501"  # Streamlit UI
+      - "8000:8000"  # API (optional)
+    volumes:
+      - ./uploads:/app/uploads
+      - ./models:/app/models
+      - ./data:/app/data
+    environment:
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+    command: >
+      sh -c "streamlit run app.py 
+             --server.port=8501 
+             --server.address=0.0.0.0 
+             --client.showErrorDetails=true"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501/_stcore/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+  
+  # Optional: API service (for programmatic access)
+  api:
+    build: .
+    container_name: myfacedetect-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: >
+      python -m uvicorn api:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
+    depends_on:
+      - web
+
+  # Database for storing results (optional)
+  db:
+    image: postgres:14-alpine
+    container_name: myfacedetect-db
+    environment:
+      - POSTGRES_DB=myfacedetect
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: myfacedetect-network
